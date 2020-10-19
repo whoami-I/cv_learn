@@ -44,7 +44,6 @@ def main():
     for epoch in range(10):
         for step, (x_train, y_train) in enumerate(train_db):
             x_train = tf.reshape(tensor=x_train, shape=[-1, 28 * 28])
-
             with tf.GradientTape() as tape:
                 logits = model(x_train)
                 loss = tf.losses.categorical_crossentropy(y_true=y_train, y_pred=logits, from_logits=True)
