@@ -41,17 +41,17 @@ model.build(input_shape=[None, 28 * 28])
 model.summary()
 
 
-
 def main():
     # input para
-    model.compile(optimizer=optimizers.Adam(lr=1e-2),
+    model.compile(optimizer=optimizers.Adam(lr=1e-4),
                   loss=tf.losses.CategoricalCrossentropy(from_logits=True),
                   metrics=['accuracy'])
 
     # run network
-    model.fit(train_db, epochs=5, validation_data=test_db, validation_freq=1)
+    model.fit(train_db, epochs=30, validation_data=test_db, validation_freq=1)
     # model.save('number_net2', include_optimizer=True)
-    tf.saved_model.save(model,'number_net2')
+    tf.saved_model.save(model, 'number_net2')
+
 
 if __name__ == '__main__':
     main()
