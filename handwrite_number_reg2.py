@@ -1,14 +1,13 @@
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers, datasets, Sequential, optimizers, metrics
-
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
 
 
 # 数据预处理
 def train_preprocess(x_train, y_train):
     # x_train = tf.cast(x=x_train, dtype=tf.float32) / 255.
-    x_train = tf.cast(tf.reshape(x_train, [-1]), dtype=tf.float32) / 255.
+    x_train = tf.cast(tf.reshape(x_train, [-1]), dtype=tf.float32)
     y_train = tf.cast(x=y_train, dtype=tf.int32)
     y_train = tf.one_hot(indices=y_train, depth=10)
 
@@ -16,7 +15,7 @@ def train_preprocess(x_train, y_train):
 
 
 def test_preprocess(x_test, y_test):
-    x_test = tf.cast(tf.reshape(x_test, [-1]), dtype=tf.float32) / 255.
+    x_test = tf.cast(tf.reshape(x_test, [-1]), dtype=tf.float32)
     # x_test = tf.cast(x=x_test, dtype=tf.float32) / 255.
     y_test = tf.cast(x=y_test, dtype=tf.int32)
 
@@ -48,10 +47,9 @@ def main():
                   metrics=['accuracy'])
 
     # run network
-    model.fit(train_db, epochs=30, validation_data=test_db, validation_freq=1)
+    model.fit(train_db, epochs=100, validation_data=test_db, validation_freq=1)
     # model.save('number_net2', include_optimizer=True)
     tf.saved_model.save(model, 'number_net2')
-
 
 if __name__ == '__main__':
     main()

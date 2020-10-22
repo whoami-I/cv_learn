@@ -9,7 +9,7 @@ print("x_test", x_test.shape, "y_test", y_test.shape)
 # 数据预处理
 def train_preprocess(x_train, y_train):
     # x_train = tf.cast(x=x_train, dtype=tf.float32) / 255.
-    x_train = tf.cast(tf.reshape(x_train, [-1]), dtype=tf.float32) / 255.
+    x_train = tf.cast(tf.reshape(x_train, [-1]), dtype=tf.float32)
     y_train = tf.cast(x=y_train, dtype=tf.int32)
     y_train = tf.one_hot(indices=y_train, depth=10)
 
@@ -38,23 +38,30 @@ xtest = tf.reshape(x_test, shape=[-1, 28 * 28])
 
 
 def predict(model, test_data):
-    print(test_data)
+    # print(test_data)
     res = model.predict(x=test_data, batch_size=28 * 28)
     print(res)
     res = tf.argmax(res[0], 0)
     print("预测值：", res)
 
 
-import cv2 as cv
-import numpy as np
+converter = tf.lite.TFLiteConverter.from_saved_model(saved_model_dir='number_net2')
+tflite_model = converter.convert()
 
-m2png = cv.imread('dataset/5.png', cv.IMREAD_GRAYSCALE)
-# m2png = cv.resize(m2png, (28, 28))
-array = np.array(m2png)
-print(array.shape)
-array = tf.reshape(array, (-1, 28 * 28))
-array = 1. - tf.cast(array, tf.float32) / 255.
-predict(model, array)
+# Save the model.
+with open('model.tflite', 'wb') as f:
+    f.write(tflite_model)
+# import cv2 as cv
+# import numpy as np
+# #
+# m2png = cv.imread('dataset/h4.png', cv.IMREAD_GRAYSCALE)
+# # m2png = cv.resize(m2png, (28, 28))
+# array = np.array(m2png)
+# print(array)
+# # print(array.shape)
+# array = tf.reshape(array, (-1, 28 * 28))
+# array = 255. - tf.cast(array, tf.float32)
+# predict(model, array)
 # cv.namedWindow('blue', cv.WINDOW_KEEPRATIO)
 # cv.imshow('blue', array)
 #
