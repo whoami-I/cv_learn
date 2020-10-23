@@ -179,3 +179,5 @@ print(loss.numpy())
 # print(loss)
 # print(z)
 # print(y_onehot)
+
+

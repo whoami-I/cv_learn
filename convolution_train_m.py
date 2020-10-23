@@ -58,7 +58,7 @@ def main():
                   metrics=['accuracy'])
 
     # run network
-    model.fit(train_db, epochs=20, validation_data=test_db, validation_freq=1)
+    model.fit(train_db, epochs=50, validation_data=test_db, validation_freq=1)
     # model.save('number_net2', include_optimizer=True)
     tf.saved_model.save(model, 'number_net_cnn')
 
